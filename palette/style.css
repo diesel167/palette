@@ -1,0 +1,132 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Maven Pro Regular', sans-serif;
+    color: #2b2b2b;
+}
+.header{
+    height: 30px;
+    width:100%;
+    font-weight: bold;
+    padding-top: 5px;
+    box-shadow: 1px -1px 7px 2px black;
+    z-index:100;
+}
+.header:before{
+    margin-left: 20px;
+    display: inline-block;
+    content: url(assets/images/Shape.png);
+    width: 68px;
+    height: 68px;
+    left: -14px;
+}
+.container{
+    display: grid;
+    height: calc(100vh - 30px);
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "palette canvas"
+                          "colors canvas";
+    grid-gap: 1vh;
+}
+
+.palette{
+    grid-area: palette;
+    margin:20px;
+    background-color: red;
+    box-shadow: 0px 3px 6px -2px black;
+}
+
+.colors{
+    grid-area: colors;
+    margin:20px;
+    background-color: green;
+    box-shadow: 0px 3px 6px -2px black;
+}
+
+.canvas{
+    background-color: blue;
+    grid-area: canvas;
+    z-index:-100;
+}
+
+
+.palette button {
+    display: block;
+    outline: 0 !important;
+    border: none;
+    background-color: white;
+    height: calc((100vh - 30px - 1vh - 80px)/8);
+    width: 100%;
+    line-height: 30px;
+    text-align: left;
+}
+
+.bucketImg{
+    width:20px;
+    height:18px;
+    margin-right:20px;
+    content:url(assets/images/i1.png);
+    display:inline-block;
+}
+.pickerImg{
+    width:20px;
+    height:18px;
+    margin-right:20px;
+    content:url(assets/images/i2.png);
+    display:inline-block;
+}
+.moveImg{
+    width:20px;
+    height:18px;
+    margin-right:20px;
+    content:url(assets/images/i3.png);
+    display:inline-block;
+}
+
+.transformImg{
+    width:20px;
+    height:18px;
+    margin-right:20px;
+    content:url(assets/images/i4.png);
+    display:inline-block;
+}
+
+
+
+.colors button {
+    display: block;
+    outline: 0 !important;
+    border: none;
+    background-color: white;
+    height: calc((100vh - 30px - 1vh - 80px)/8);
+    width: 100%;
+    line-height: 30px;
+    text-align: left;
+}
+button:hover{
+    background-color:red;
+    cursor:pointer;
+    transition:0.2s ease-in-out;
+}
+.currentColorImg{
+    width:20px;
+    height:20px;
+    border-radius:10px;
+    background-color:red;
+    display:inline-block;
+    margin-right:20px;
+}
+.prevColorImg{
+    width:20px;
+    height:20px;
+    border-radius:10px;
+    background-color:green;
+    display:inline-block;
+    margin-right:20px;
+}
+
+
