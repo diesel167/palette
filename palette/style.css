@@ -48,9 +48,9 @@ body{
 }
 
 .canvas{
-    background-color: blue;
     grid-area: canvas;
-    z-index:-100;
+    z-index:100;
+    padding:10% 10% 5% 25%;
 }
 
 
@@ -108,8 +108,26 @@ body{
     text-align: left;
 }
 button:hover{
-    background-color:red;
+    background-color: #ffb1b6;
     cursor:pointer;
+    transition:0.2s ease-in-out;
+}
+
+.bucketImg:hover{
+    transform:scale(1.2);
+}
+.moveImg:hover{
+    transform:scale(1.2);
+}
+.pickerImg:hover{
+    transform:scale(1.2);
+}
+.transformImg:hover{
+    transform:scale(1.2);
+}
+
+button:active{
+    background-color:white;
     transition:0.2s ease-in-out;
 }
 .currentColorImg{
@@ -130,3 +148,17 @@ button:hover{
 }
 
 
+.canvas_container{
+    display: grid;
+    height: 60vh;
+    width: 60vh;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    z-index:100;
+}
+
+.canvas_item{
+    transition:0.2s ease-in-out;
+    background-color:#ccc;
+}
