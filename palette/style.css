@@ -180,10 +180,47 @@ button:active{
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-gap: 10px;
-    z-index:100;
+    z-index: 100;
 }
 
 .canvas_item{
     transition: 0.2s ease-in-out;
     background-color: #ccc;
+}
+
+
+div#item1{
+    order: 1;
+}
+
+div#item2{
+    order: 2;
+}
+
+div#item3{
+    order: 3;
+}
+
+div#item4{
+    order: 4;
+}
+
+div#item5{
+    order: 5;
+}
+
+div#item6{
+    order: 6;
+}
+
+div#item7{
+    order: 7;
+}
+
+div#item8{
+    order: 8;
+}
+
+div#item9{
+    order: 9;
 }
