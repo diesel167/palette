@@ -1,12 +1,11 @@
 window.onload=function() {
-    //initial state
-    let temp = {
+    //initial state of tools
+    let state = {
         currentTool: '',
         currentColor: 'rgb(0, 128, 0)',
         prevColor: 'rgb(204, 204, 204)',
     };
-    localStorage.setItem("myState", JSON.stringify(temp));
-    let state = JSON.parse(localStorage.getItem("myState"));
+
 
 
     //SET CURRENT AND PREV COLORS IN HTML
@@ -23,7 +22,6 @@ window.onload=function() {
         elem.onclick = function () {
             if (state.currentTool === 'bucket') {
                 state.currentTool = '';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('bucket').style.backgroundColor = '';
             }
             else {
@@ -33,7 +31,6 @@ window.onload=function() {
                 document.getElementById('picker').style.backgroundColor = '';
 
                 state.currentTool = 'bucket';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('bucket').style.backgroundColor = 'red';
             }
         }
@@ -48,7 +45,6 @@ window.onload=function() {
         elem.onclick = function () {
             if (state.currentTool === 'transform') {
                 state.currentTool = '';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('transform').style.backgroundColor = '';
             }
             else {
@@ -58,7 +54,6 @@ window.onload=function() {
                 document.getElementById('picker').style.backgroundColor = '';
 
                 state.currentTool = 'transform';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('transform').style.backgroundColor = 'red';
             }
         }
@@ -74,7 +69,6 @@ window.onload=function() {
         elem.onclick = function () {
             if (state.currentTool === 'picker') {
                 state.currentTool = '';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('picker').style.backgroundColor = '';
             }
             else {
@@ -84,7 +78,6 @@ window.onload=function() {
                 document.getElementById('transform').style.backgroundColor = '';
 
                 state.currentTool = 'picker';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('picker').style.backgroundColor = 'red';
             }
         }
@@ -105,7 +98,6 @@ window.onload=function() {
                 let temp = state.currentColor;
                 state.currentColor = style.backgroundColor;
                 state.prevColor = temp;
-                localStorage.setItem("myState", JSON.stringify(state));
                 //SET CURRENT AND PREV COLORS IN HTML
                 document.getElementById('currentColorImg').style.backgroundColor = state.currentColor;
                 document.getElementById('prevColorImg').style.backgroundColor = state.prevColor;
@@ -142,7 +134,6 @@ window.onload=function() {
         elem.onclick = function () {
             if (state.currentTool === 'move') {
                 state.currentTool = '';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('move').style.backgroundColor = '';
             }
             else {
@@ -152,7 +143,6 @@ window.onload=function() {
                 document.getElementById('transform').style.backgroundColor = '';
 
                 state.currentTool = 'move';
-                localStorage.setItem("myState", JSON.stringify(state));
                 document.getElementById('move').style.backgroundColor = 'red';
             }
         }
@@ -163,23 +153,60 @@ window.onload=function() {
     //CANVAS_ITEM FUNCTIONAL
     let count = false; //indicators for move tool
     let orderTemp; //indicators for move tool
-    let elemTemp;
-    Array.from(document.getElementsByClassName('canvas_item')).forEach(elem => {
+    let elemTemp; //indicators for move tool
+    let j;   //indicators for move tool
+
+
+    let arr=[];  //working arr (duplicate of local storage) for better and more simpler usage
+
+    Array.from(document.getElementsByClassName('canvas_item')).forEach((elem,i) => {
+        //check is the element in localStorage already
+        if(localStorage.getItem('canvas')){
+            console.log(localStorage.getItem('canvas'));
+            if(JSON.parse(localStorage.getItem('canvas'))[i]){
+                //set properties from storage
+                arr[i]=JSON.parse(localStorage.getItem('canvas'))[i];
+                elem.style.borderRadius=arr[i].borderRadius;
+                elem.style.backgroundColor=arr[i].backgroundColor;
+                elem.style.order=arr[i].order;
+            }
+            else{
+                arr[i]={order:'',borderRadius:'',backgroundColor:''};
+            }
+        }
+        else{
+            //if empty storage initially set empty array to localstorage
+            localStorage.setItem("canvas",JSON.stringify(arr));
+        }
+
         elem.onclick = function itemClick() {
             let style = getComputedStyle(elem);
+
             //bucket listener
             if (state.currentTool === 'bucket') {
                 elem.style.backgroundColor = state.currentColor;
+                arr[i].backgroundColor=state.currentColor;
+                //update storage for current session
+                localStorage.setItem("canvas", JSON.stringify(arr));
             }
+
             //transform listener
             if (state.currentTool === 'transform') {
                 if (elem.style.borderRadius === '') {
                     elem.style.borderRadius = 'calc((60vh - 20px) / 3)';
+                    //update our working arr
+                    arr[i].borderRadius='calc((60vh - 20px) / 3)';
+                    //update storage for current session
+                    localStorage.setItem("canvas", JSON.stringify(arr));
                 }
                 else {
                     elem.style.borderRadius = '';
+                    arr[i].borderRadius='';
+                    //update storage for current session
+                    localStorage.setItem("canvas", JSON.stringify(arr));
                 }
             }
+
             //color picker listener
             if (state.currentTool === 'picker') {
                 //check for duplicate colors
@@ -187,22 +214,30 @@ window.onload=function() {
                     let temp = state.currentColor;
                     state.currentColor = style.backgroundColor;
                     state.prevColor = temp;
-                    localStorage.setItem("myState", JSON.stringify(state));
+
                     //SET CURRENT AND PREV COLORS IN HTML
                     document.getElementById('currentColorImg').style.backgroundColor = state.currentColor;
                     document.getElementById('prevColorImg').style.backgroundColor = state.prevColor;
                 }
             }
-
             if (state.currentTool === 'move') {
                 if (count === false) {
                     orderTemp = style.order; //set order element to move
                     elemTemp = elem;
+                    j=i;
                     count = !count;
                 }
                 else {
+                    //drop props
                     elem.style.order = orderTemp;
+                    arr[i].order=orderTemp;
+
                     elemTemp.style.order = style.order;
+                    arr[j].order=style.order;
+
+                    //update storage for current session
+                    localStorage.setItem("canvas", JSON.stringify(arr));
+                    //reset indicator
                     count = !count;
                 }
             }
