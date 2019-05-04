@@ -153,7 +153,7 @@ button:active{
     margin-right: 20px;
 }
 
-#Blue>div{
+#Blue>.colorForPicker{
     width: 20px;
     height: 20px;
     border-radius: 10px;
@@ -162,7 +162,7 @@ button:active{
     background-color: rgb(64, 65, 195);
 }
 
-#Red>div{
+#Red>.colorForPicker{
     width: 20px;
     height: 20px;
     border-radius: 10px;

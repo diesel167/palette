@@ -92,7 +92,8 @@ window.onload=function() {
     chooseColor(document.querySelector('#prevColor'));
 
     function chooseColor(elem) {
-        let style = getComputedStyle(elem.childNodes[0]);
+        const child = elem.getElementsByClassName('colorForPicker')[0];
+        let style = getComputedStyle(child);
         elem.onclick = function () {
             if (state.currentColor !== style.backgroundColor && state.currentTool === 'picker') {
                 let temp = state.currentColor;
@@ -162,7 +163,6 @@ window.onload=function() {
     Array.from(document.getElementsByClassName('canvas_item')).forEach((elem,i) => {
         //check is the element in localStorage already
         if(localStorage.getItem('canvas')){
-            console.log(localStorage.getItem('canvas'));
             if(JSON.parse(localStorage.getItem('canvas'))[i]){
                 //set properties from storage
                 arr[i]=JSON.parse(localStorage.getItem('canvas'))[i];
@@ -176,7 +176,9 @@ window.onload=function() {
         }
         else{
             //if empty storage initially set empty array to localstorage
-            localStorage.setItem("canvas",JSON.stringify(arr));
+            localStorage.setItem('canvas',JSON.stringify(arr));
+            //add info for 1st element
+            arr[i]={order:'',borderRadius:'',backgroundColor:''};
         }
 
         elem.onclick = function itemClick() {
